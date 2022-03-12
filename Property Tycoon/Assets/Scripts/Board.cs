@@ -11,7 +11,7 @@ public class Board : MonoBehaviour
     private Player currentPlayer;
     private const int numSpacesOnBoard = 40;
     private Transform[][] waypointsList;
-    private Transform[] waypoints;
+    private BoardTile[] boardTiles;
 
     public Transform waypoint;
     public GameObject player;
@@ -54,6 +54,11 @@ public class Board : MonoBehaviour
         currentPlayerNum = (currentPlayerNum + 1) % numPlayers;
     }
 
+    private void SetSpaces()
+    {
+        
+    }
+
     // Creates the waypoints for each player for where their piece goes on the board
     // Each player is given a list of waypoints unique to them
     private void CreateWaypoints()
@@ -69,52 +74,6 @@ public class Board : MonoBehaviour
             waypointsList[k] = new Transform[numSpacesOnBoard];
         }
 
-        /*
-        for (int i = 0; i < numSpacesOnBoard; i++)
-        {
-            for (int j = 0; j < numPlayers; j++)
-            {
-                waypointsList[j][i] = Instantiate(waypoint, new Vector3(x + x2, 0, z + z2), Quaternion.identity);
-
-                if (i < 10)
-                {
-                    x2 += 1;
-                }
-                else if (i >= 10 && i < 20)
-                {
-                    z2 -= 1;
-                }
-                else if (i >= 20 && i < 30)
-                {
-                    x2 -= 1;
-                }
-                else
-                {
-                    z2 += 1;
-                }
-            }
-
-            x2 = 0;
-            z2 = 0;
-
-            if (i < 10)
-            {
-                z += 4;
-            }
-            else if (i >= 10 && i < 20)
-            {
-                x += 4;
-            }
-            else if (i >= 20 && i < 30)
-            {
-                z -= 4;
-            }
-            else
-            {
-                x -= 4;
-            }
-        }
-*/
         int gap = 4;
         int cornerGap = 8;
         int currentGap;

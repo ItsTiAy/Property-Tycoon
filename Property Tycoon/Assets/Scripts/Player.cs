@@ -66,5 +66,9 @@ public class Player : MonoBehaviour
     {
         this.waypoints = waypoints;
     }
-    
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(1f);
+    }
 }
