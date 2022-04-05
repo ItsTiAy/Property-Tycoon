@@ -1,62 +1,60 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Board : MonoBehaviour
 {
-    private Dice dice;
+    //private Dice dice;
     private int numPlayers;
-    private int currentPlayerNum = 0;
-    private GameObject[] playerList;
-    private Player currentPlayer;
+    //private int currentPlayerNum = 0;
+    private GameObject[] playerArray;
     private const int numSpacesOnBoard = 40;
     private Transform[][] waypointsList;
+    public GameObject waypointsHolder;
+
     private BoardTile[] boardTiles;
+    public JSONReader reader;
+
+    //public TMP_Text text;
 
     public Transform waypoint;
     public GameObject player;
-    public GameObject theDice;
+    public Dice dice;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Creates new dice object 
-        dice = Instantiate(theDice).GetComponent<Dice>();
+        // Reads data from file for properties and cards
+        boardTiles = reader.GetBoardTiles();
+
         // Temporary hardcode of number of players
-        numPlayers = 6;
-        playerList = new GameObject[numPlayers];
+        numPlayers = 1;
+        playerArray = new GameObject[numPlayers];
 
         CreateWaypoints();
 
         // Loops for each player, adding them to a list of all the players
         for (int i = 0; i < numPlayers; i++)
         {
-            playerList[i] = Instantiate(player, new Vector3(i - 24, 0, -24), Quaternion.identity);
-            playerList[i].GetComponent<Player>().setWaypoints(waypointsList[i]);
+            playerArray[i] = Instantiate(player, new Vector3(i - 24, 0, -24), Quaternion.identity);
+            playerArray[i].GetComponent<Player>().setWaypoints(waypointsList[i]);
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public GameObject[] GetPlayers()
     {
-        
+        return playerArray;
     }
 
-    public void TakeTurn()
+    public int GetNumPlayers()
     {
-        // Sets currentPlayer to the player in the list of players at position of currentPlayerNum
-        currentPlayer = playerList[currentPlayerNum].GetComponent<Player>();
-
-        // Runs MovePlayer method for the current player
-        currentPlayer.MovePlayer(dice.RollDice());
-
-        // currentPlayerNum is increased by 1 and loops back to the first player after the last player has had their turn
-        currentPlayerNum = (currentPlayerNum + 1) % numPlayers;
+        return numPlayers;
     }
 
-    private void SetSpaces()
+    public BoardTile[] GetBoardTiles()
     {
-        
+        return boardTiles;
     }
 
     // Creates the waypoints for each player for where their piece goes on the board
@@ -64,7 +62,6 @@ public class Board : MonoBehaviour
     private void CreateWaypoints()
     {
         waypointsList = new Transform[numPlayers][];
-        //waypoints = new Transform[numSpacesOnBoard];
 
         int x = -24;
         int z = -24;
@@ -96,7 +93,7 @@ public class Board : MonoBehaviour
                     // Sets the waypoints X and Z coordinates for the jail space 
                     if (spaceNum == 10)
                     {
-                        if(k < 3)
+                        if (k < 3)
                         {
                             waypointX = x + (spaceBetween * (3 - k)) - 1;
                             waypointZ = z;
@@ -156,6 +153,7 @@ public class Board : MonoBehaviour
 
                     // Creates a single waypoint at the coordinates specified
                     waypointsList[k][spaceNum] = Instantiate(waypoint, new Vector3(waypointX, 0, waypointZ), Quaternion.identity);
+                    waypointsList[k][spaceNum].SetParent(waypointsHolder.transform);
                 }
 
                 // For the first and last space on a side (the corners) the gap between each space is set to the corner gap
@@ -188,7 +186,7 @@ public class Board : MonoBehaviour
                         break;
                 }
                 spaceNum++;
-            } 
+            }
         }
     }
 }

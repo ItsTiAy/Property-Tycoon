@@ -45,7 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypoints: []
-  waypoint: {fileID: 2423894585435770377, guid: 5c3924f0b7c3a154690cb716343a048a, type: 3}
+  playerInfoCards: {fileID: 0}
+  infoCard: {fileID: 613353965701768816, guid: 73063d58ea37e98469cbc74f0a517426, type: 3}
+  button: {fileID: 0}
+  properties: []
+  mortgaged: []
+  money: 0
 --- !u!1 &5653954898350308896
 GameObject:
   m_ObjectHideFlags: 0

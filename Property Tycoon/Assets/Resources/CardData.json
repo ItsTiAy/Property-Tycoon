@@ -1,5 +1,5 @@
 {
-    "potLuck":
+    "potLuckCards":
     [
         {
             "description": "You inherit £200",
@@ -83,76 +83,76 @@
         },
         {
             "description": "Get out of jail free",
-            "actionType": "goojf",
+            "actionType": "getOutOfJailFree",
             "action": null
         }
     ],
-    "opportunityKnocks":
+    "opportunityKnocksCards":
     [
         {
-            "description": "You inherit £200",
-            "actionType": "gainMoney",
-            "action": 200
-        },
-        {
-            "description": "You have won 2nd prize in a beauty contest, collect £50",
+            "description": "Bank pays you divided of £50",
             "actionType": "gainMoney",
             "action": 50
         },
         {
-            "description": "You are up the creek with no paddle - go back to the Old Creek",
-            "actionType": "moveBack",
-            "action": 2
-        },
-        {
-            "description": "Student loan refund. Collect £20",
+            "description": "You have won a lip sync battle. Collect £100",
             "actionType": "gainMoney",
-            "action": 20
-        },
-        {
-            "description": "Bank error in your favour. Collect £200",
-            "actionType": "gainMoney",
-            "action": 200
-        },
-        {
-            "description": "Pay bill for text books of £100",
-            "actionType": "loseMoney",
             "action": 100
         },
         {
-            "description": "Mega late night taxi bill pay £50",
-            "actionType": "loseMoney",
-            "action": 50
+            "description": "Advance to Turing Heights",
+            "actionType": "moveForward",
+            "action": 40
         },
         {
-            "description": "Advance to go",
+            "description": "Advance to Han Xin Gardens. If you pass GO, collect £200",
+            "actionType": "moveForward",
+            "action": 25
+        },
+        {
+            "description": "Fined £15 for speeding",
+            "actionType": "loseMoney",
+            "action": 15
+        },
+        {
+            "description": "Pay university fees of £150",
+            "actionType": "loseMoney",
+            "action": 150
+        },
+        {
+            "description": "Take a trip to Hove station. If you pass GO collect £200",
+            "actionType": "moveForward",
+            "action": 16
+        },
+        {
+            "description": "Loan matures, collect £150",
+            "actionType": "gainMoney",
+            "action": 150
+        },
+        {
+            "description": "You are assessed for repairs, £40/house, £115/hotel",
+            "actionType": "loseMoneySpecial",
+            "action": 0
+        },
+        {
+            "description": "Advance to GO",
             "actionType": "moveForward",
             "action": 1
         },
         {
-            "description": "From sale of Bitcoin you get £50",
-            "actionType": "gainMoney",
-            "action": 50
+            "description": "You are assessed for repairs, £25/house, £100/hotel",
+            "actionType": "loseMoneySpecial",
+            "action": 0
         },
         {
-            "description": "Bitcoin assets fall - pay off Bitcoin short fall",
-            "actionType": "loseMoney",
-            "action": 50
+            "description": "Go back 3 spaces",
+            "actionType": "moveBack",
+            "action": 3
         },
         {
-            "description": "Pay a £10 fine or take opportunity knocks",
-            "actionType": "fine or oK",
-            "action": 10
-        },
-        {
-            "description": "Pay insurance fee of £50",
-            "actionType": "loseMoney",
-            "action": 50
-        },
-        {
-            "description": "Savings bond matures, collect £100",
-            "actionType": "gainMoney",
-            "action": 100
+            "description": "Advance to Skywalker Drive. If you pass GO collect £200",
+            "actionType": "moveForward",
+            "action": 12
         },
         {
             "description": "Go to jail. Do not pass GO, do not collect £200",
@@ -160,18 +160,13 @@
             "action": 11
         },
         {
-            "description": "Received interest on shares of £25",
-            "actionType": "gainMoney",
-            "action": 25
-        },
-        {
-            "description": "It's your birthday. Collect £10 from each player",
-            "actionType": "gainMoneyFromPlayers",
-            "action": 10
+            "description": "Drunk in charge of a hoverboard. Fine £30",
+            "actionType": "loseMoney",
+            "action": 30
         },
         {
             "description": "Get out of jail free",
-            "actionType": "goojf",
+            "actionType": "getOutOfJailFree",
             "action": null
         }
     ]

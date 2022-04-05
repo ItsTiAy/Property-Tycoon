@@ -1,0 +1,48 @@
+{
+    "potLuckCards":
+    [
+        {
+            "gainMoney":
+            [
+                {
+                    "description": "You inherit £200",
+                    "action": 200
+                },
+                {
+                    "description": "You also inherit £200",
+                    "action": 200
+                },
+            ],
+            "loseMoney":
+            [
+                {
+                    "description": "You bad £200",
+                    "action": 200
+                }
+            ],
+        }
+    ],
+    "opportunityKnocksCards":
+    [
+        {
+            "gainMoney":
+            [
+                {
+                    "description": "You inherit £200",
+                    "action": 200
+                },
+                {
+                    "description": "You also inherit £200",
+                    "action": 200
+                },
+            ],
+            "loseMoney":
+            [
+                {
+                    "description": "You bad £200",
+                    "action": 200
+                }
+            ],
+        }
+    ]
+}
