@@ -1,48 +1,165 @@
 {
-    "potLuckCards":
+    "gainMoneyPotLuck":
     [
         {
-            "gainMoney":
-            [
-                {
-                    "description": "You inherit £200",
-                    "action": 200
-                },
-                {
-                    "description": "You also inherit £200",
-                    "action": 200
-                },
-            ],
-            "loseMoney":
-            [
-                {
-                    "description": "You bad £200",
-                    "action": 200
-                }
-            ],
+            "description": "You inherit £200",
+            "amount": 200
+        },
+        {
+            "description": "You have won 2nd prize in a beauty contest, collect £50",
+            "amount": 50
+        },
+        {
+            "description": "Student loan refund. Collect £20",
+            "amount": 20
+        },
+        {
+            "description": "Bank error in your favour. Collect £200",
+            "amount": 200
+        },
+        {
+            "description": "From sale of Bitcoin you get £50",
+            "amount": 50
+        },
+        {
+            "description": "Savings bond matures, collect £100",
+            "amount": 100
+        },
+        {
+            "description": "Received interest on shares of £25",
+            "amount": 25
         }
     ],
-    "opportunityKnocksCards":
+    "loseMoneyPotLuck":
     [
         {
-            "gainMoney":
-            [
-                {
-                    "description": "You inherit £200",
-                    "action": 200
-                },
-                {
-                    "description": "You also inherit £200",
-                    "action": 200
-                },
-            ],
-            "loseMoney":
-            [
-                {
-                    "description": "You bad £200",
-                    "action": 200
-                }
-            ],
+            "description": "Pay bill for text books of £100",
+            "amount": 100
+        },
+        {
+            "description": "Mega late night taxi bill pay £50",
+            "amount": 50
+        },
+        {
+            "description": "Bitcoin assets fall - pay off Bitcoin short fall of £50",
+            "amount": 50
+        },
+        {
+            "description": "Pay insurance fee of £50",
+            "amount": 50
         }
-    ]
+    ],
+    "moveForwardPotLuck":
+    {
+        "description": "Advance to go",
+        "tilePosition": 1
+    },
+    "moveBackwardPotLuck":
+    [
+        {
+            "description": "You are up the creek with no paddle - go back to the Old Creek",
+            "tilePosition": 2
+        },    
+        {
+            "description": "Go to jail. Do not pass GO, do not collect £200",
+            "tilePosition": 11
+        }
+    ],
+    "choicePotLuck":
+    {
+        "description": "Pay a £10 fine or take opportunity knocks",
+        "amount": 10
+    },
+    "birthdayPotLuck":
+    {
+        "description": "It's your birthday. Collect £10 from each player",
+        "amount": 10
+    },
+    "getOutOfJailFreePotLuck":
+    {
+        "description": "Get out of jail free",
+        "cardType": "PotLuck"
+    },
+
+    "gainMoneyOpportunityKnocks":
+    [
+        {
+            "description": "Bank pays you divided of £50",
+            "amount": 50
+        },
+        {
+            "description": "You have won a lip sync battle. Collect £100",
+            "amount": 100
+        },
+        {
+            "description": "Loan matures, collect £150",
+            "amount": 150
+        }
+    ],
+    "loseMoneyOpportunityKnocks":
+    [
+        {
+            "description": "Fined £15 for speeding",
+            "amount": 15
+        },
+        {
+            "description": "Pay university fees of £150",
+            "amount": 150
+        },
+        {
+            "description": "Drunk in charge of a hoverboard. Fine £30",
+            "amount": 30
+        }
+    ],
+    "moveForwardOpportunityKnocks":
+    [
+        {
+            "description": "Advance to Han Xin Gardens. If you pass GO, collect £200",
+            "tilePosition": 25
+        },
+        {
+            "description": "Take a trip to Hove station. If you pass GO collect £200",
+            "tilePosition": 16
+        },
+        {
+            "description": "Advance to Turing Heights",
+            "tilePosition": 40
+        },
+        {
+            "description": "Advance to GO",
+            "tilePosition": 1
+        },
+        {
+            "description": "Advance to Skywalker Drive. If you pass GO collect £200",
+            "tilePosition": 12
+        }
+    ],
+    "moveBackwardOpportunityKnocks":
+    {
+        "description": "Go to jail. Do not pass GO, do not collect £200",
+        "tilePosition": 11
+    },
+    "moveBackwardAmountOpportunityKnocks":
+    {
+        "description": "Go back 3 spaces",
+        "amount": 3
+    },
+    "repairsOpportunityKnocks":
+    [
+        {
+            "description": "You are assessed for repairs, £40/house, £115/hotel",
+            "houseCost": 40,
+            "hotelCost": 115
+        },
+        {
+            "description": "You are assessed for repairs, £25/house, £100/hotel",
+            "houseCost": 25,
+            "hotelCost": 100
+        }
+    ],
+    "getOutOfJailFreeOpportunityKnocks":
+    {
+        "description": "Get out of jail free",
+        "cardType": "Opportunity Knocks"
+    }
 }

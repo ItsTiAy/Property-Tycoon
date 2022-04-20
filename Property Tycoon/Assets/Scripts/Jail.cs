@@ -15,6 +15,10 @@ public class Jail : BoardTile
 
 	public override void PerformAction(Player currentPlayer)
 	{
+		if(currentPlayer.GetCurrentPosition() != 10)
+        {
+			currentPlayer.GoToJail();
+		}
 		rollDiceButton.interactable = true;
 	}
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 
 public class Board : MonoBehaviour
 {
@@ -11,12 +12,16 @@ public class Board : MonoBehaviour
     private GameObject[] playerArray;
     private const int numSpacesOnBoard = 40;
     private Transform[][] waypointsList;
+    private Transform[] jailWaypoints;
+
+    private Queue<Card> opportunityKnocksCards;
+    private Queue<Card> potLuckCards;
+
     public GameObject waypointsHolder;
 
     private BoardTile[] boardTiles;
     public JSONReader reader;
 
-    //public TMP_Text text;
 
     public Transform waypoint;
     public GameObject player;
@@ -27,9 +32,15 @@ public class Board : MonoBehaviour
     {
         // Reads data from file for properties and cards
         boardTiles = reader.GetBoardTiles();
+        ShuffleCards();
+
+        foreach (BoardTile boardTile in boardTiles)
+        {
+            boardTile.setBoard(this);
+        }
 
         // Temporary hardcode of number of players
-        numPlayers = 1;
+        numPlayers = 2;
         playerArray = new GameObject[numPlayers];
 
         CreateWaypoints();
@@ -39,7 +50,60 @@ public class Board : MonoBehaviour
         {
             playerArray[i] = Instantiate(player, new Vector3(i - 24, 0, -24), Quaternion.identity);
             playerArray[i].GetComponent<Player>().setWaypoints(waypointsList[i]);
+            playerArray[i].GetComponent<Player>().SetJailWaypoint(jailWaypoints[i]);
         }
+    }
+
+    public void SetOpportunityKnocksCards(Queue<Card> cards)
+    {
+        opportunityKnocksCards = cards;
+    }
+
+    public void SetPotluckCards(Queue<Card> cards)
+    {
+        potLuckCards = cards;
+    }
+    public Queue<Card> GetOpportunityKnocksCards()
+    {
+        return opportunityKnocksCards;
+    }
+
+    public Queue<Card> GetPotluckCards()
+    {
+        return potLuckCards;
+    }
+
+    private void ShuffleCards()
+    {
+        int randNum;
+
+        Queue<Card> opportunityKnocksShuffled = new Queue<Card>();
+        Queue<Card> potLuckShuffled = new Queue<Card>();
+
+        List<Card> opportunityKnocksTemp;
+        opportunityKnocksTemp = opportunityKnocksCards.ToList();
+
+        List<Card> potLuckTemp;
+        potLuckTemp = potLuckCards.ToList();
+
+        while (opportunityKnocksTemp.Count > 0)
+        {
+            randNum = Random.Range(0, opportunityKnocksTemp.Count);
+            opportunityKnocksShuffled.Enqueue(opportunityKnocksTemp[randNum]);
+            //Debug.Log(opportunityKnocksTemp[randNum].description);
+            opportunityKnocksTemp.RemoveAt(randNum);
+        }
+
+        while (potLuckTemp.Count > 0)
+        {
+            randNum = Random.Range(0, potLuckTemp.Count);
+            potLuckShuffled.Enqueue(potLuckTemp[randNum]);
+            //Debug.Log(potLuckTemp[randNum].description);
+            potLuckTemp.RemoveAt(randNum);
+        }
+
+        opportunityKnocksCards = opportunityKnocksShuffled;
+        potLuckCards = potLuckShuffled;
     }
 
     public GameObject[] GetPlayers()
@@ -62,14 +126,10 @@ public class Board : MonoBehaviour
     private void CreateWaypoints()
     {
         waypointsList = new Transform[numPlayers][];
+        jailWaypoints = new Transform[numPlayers];
 
         int x = -24;
         int z = -24;
-
-        for (int k = 0; k < numPlayers; k++)
-        {
-            waypointsList[k] = new Transform[numSpacesOnBoard];
-        }
 
         int gap = 4;
         int cornerGap = 8;
@@ -78,6 +138,25 @@ public class Board : MonoBehaviour
         int waypointX = 0;
         int waypointZ = 0;
         int spaceBetween = 2;
+
+        for (int k = 0; k < numPlayers; k++)
+        {
+            waypointsList[k] = new Transform[numSpacesOnBoard];
+
+            // Generates the waypoints for in jail
+            if (k < 3)
+            {
+                waypointX = -21 + (k % 3);
+                waypointZ = 22 - (k % 3);
+            }
+            else
+            {
+                waypointX = -22 + (k % 3);
+                waypointZ = 21 - (k % 3);
+            }
+
+            jailWaypoints[k] = Instantiate(waypoint, new Vector3(waypointX, 0, waypointZ), Quaternion.identity);
+        }
 
         // Loops for each side of the board
         for (int i = 0; i < 4; i++)

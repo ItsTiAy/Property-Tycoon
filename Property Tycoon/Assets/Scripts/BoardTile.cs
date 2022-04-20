@@ -9,6 +9,8 @@ public class BoardTile
 	public string tileName;
 	public bool buyable;
 
+	protected Board board;
+
 	public void SetBuyable(bool buyable)
     {
 		this.buyable = buyable;
@@ -17,6 +19,11 @@ public class BoardTile
 	public string getName()
     {
 		return tileName;
+    }
+
+	public void setBoard(Board board)
+    {
+		this.board = board;
     }
 
 	public virtual void PerformAction(Player currentPlayer)

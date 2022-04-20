@@ -12,11 +12,16 @@ public class Player : MonoBehaviour
     private const int numSpacesOnBoard = 40;
     private bool moving = false;
 	private int diceRollNum;
+	private int numDoubles = 0;
     public Transform[] waypoints;
 	public GameObject playerInfoCards;
 	public GameObject infoCard;
 	private GameObject playerInfoCard;
 	private TMP_Text moneyUI;
+	private bool getOutOfJailFreeCardPotluck;
+	private bool getOutOfJailFreeCardOpportunityKnocks;
+	private Transform jailWaypoint;
+	private bool jail;
 
 	public GameObject button;
     private Board board;
@@ -48,6 +53,41 @@ public class Player : MonoBehaviour
     {
 		// Increases the players position by the value on the dice, loops back to start when greater than 40
 		newPosition = (currentPosition + diceNum) % numSpacesOnBoard;
+    }
+
+	public void SetPosition(int tilePosition)
+    {
+		currentPosition = tilePosition - 1;
+		newPosition = currentPosition;
+		transform.position = waypoints[currentPosition].transform.position;
+    }
+
+	public void GoToJail()
+    {
+		jail = true;
+		currentPosition = 10;
+		newPosition = currentPosition;
+		transform.position = jailWaypoint.transform.position;
+	}
+
+	public bool InJail()
+    {
+		return jail;
+    }
+
+	public void IncreaseNumDoubles()
+    {
+		numDoubles++;
+    }
+
+	public int GetNumDoubles()
+    {
+		return numDoubles;
+    }
+
+	public void ResetNumDoubles()
+    {
+		numDoubles = 0;
     }
 
 	public bool MovePlayerPiece()
@@ -100,6 +140,16 @@ public class Player : MonoBehaviour
 		return null;
     }
 
+	public void setGetOutOfJailFreePotluck(bool getOutOfJailFree)
+    {
+		getOutOfJailFreeCardPotluck = getOutOfJailFree;
+    }
+
+	public void setGetOutOfJailFreeOpportunityKnocks(bool getOutOfJailFree)
+	{
+		getOutOfJailFreeCardOpportunityKnocks = getOutOfJailFree;
+	}
+
 	public int GetNumLaps()
     {
 		return numLaps;
@@ -150,6 +200,12 @@ public class Player : MonoBehaviour
         return waypoints;
     }
 
+	public void SetJailWaypoint(Transform waypoint)
+    {
+		jailWaypoint = waypoint;
+
+	}
+
 	public void BuyProperty(BuyableTile property)
     {
 		properties.Add(property);
@@ -169,13 +225,14 @@ public class Player : MonoBehaviour
 	public void BuyHouse(Property property)
     {
 		property.AddHouse();
-		money -= property.GetHousePrice();
+		DecreaseMoney(property.GetHousePrice());
+		Debug.Log(property.GetHousePrice());
     }
 
 	public void SellHouse(Property property)
 	{
 		property.RemoveHouse();
-		money += property.GetHousePrice();
+		IncreaseMoney(property.GetHousePrice());
 	}
 
 	public void MortgageProperty(Property property)
@@ -194,7 +251,7 @@ public class Player : MonoBehaviour
 	{
 		int m = money;
 
-		properties.ForEach(i => Debug.Log(i.ToString()));
+		//properties.ForEach(i => Debug.Log(i.ToString()));
 
 		foreach (BuyableTile tile in properties)
         {
@@ -232,6 +289,21 @@ public class Player : MonoBehaviour
 	{
 		return properties.Contains(p);
 	}
+
+	public List<BuyableTile> GetSameGroupProperties(BuyableTile property)
+    {
+		List<BuyableTile> sameGroupProperties = new List<BuyableTile>();
+
+		foreach (BuyableTile tile in properties)
+        {
+			if (property.group.ToLower() == tile.group.ToLower())
+            {
+				sameGroupProperties.Add(tile);
+            }
+        }
+
+		return sameGroupProperties;
+    }
 
 	public bool DecreaseMoney(int amount)
 	{ 

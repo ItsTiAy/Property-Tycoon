@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class Property : BuyableTile
 {
 	private int numHouses;
-	private int housePrice;
+	public int houseCost;
 
 	public Property()
 	{
@@ -95,31 +95,6 @@ public class Property : BuyableTile
 
 	public int GetHousePrice()
 	{
-		return housePrice;
+		return houseCost;
 	}
-
-	private Color32 GetGroupColour()
-    {
-		switch(group)
-        {
-			case "brown":
-				return new Color32(134, 76, 56, 255);
-			case "blue":
-				return new Color32(172, 220, 240, 255);
-			case "purple":
-				return new Color32(197, 56, 132, 255);
-			case "orange":
-				return new Color32(236, 139, 44, 255);
-			case "red":
-				return new Color32(219, 36, 40, 255);
-			case "yellow":
-				return new Color32(255, 240, 4, 255);
-			case "green":
-				return new Color32(19, 168, 87, 255);
-			case "deepBlue":
-				return new Color32(0, 102, 164, 255);
-			default:
-				return Color.black;
-		}
-    }
 }

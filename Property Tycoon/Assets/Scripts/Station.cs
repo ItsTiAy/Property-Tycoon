@@ -26,7 +26,7 @@ public class Station : BuyableTile
             buyButton.onClick.AddListener(delegate 
             {
                 currentPlayer.BuyProperty(this);
-                currentPlayer.GetPropertyInfoSquare(this).GetComponent<Image>().color = Color.black;
+                currentPlayer.GetPropertyInfoSquare(this).GetComponent<Image>().color = GetGroupColour();
                 Debug.Log("Player bought " + tileName + " for £" + cost);
             });
 

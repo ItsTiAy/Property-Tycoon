@@ -10,22 +10,39 @@ public class OpportunityKnocks : BoardTile
 	private GameObject opportunityKnocksPopup;
 	private Button rollDiceButton;
 	private TMP_Text description;
+	private Button okButton;
 
-	public OpportunityKnocksCard[] opportunityKnocksCards;
+	private Card getOutOfJailFree;
 
-	public void setObjects(GameObject opportunityKnocksPopup, Button rollDiceButton, TMP_Text description)
+	private Queue<Card> opportunityKnocksCards;
+	private Card currentCard;
+
+	public void setObjects(GameObject opportunityKnocksPopup, Button rollDiceButton, TMP_Text description, Button okButton)
 	{
 		this.opportunityKnocksPopup = opportunityKnocksPopup;
 		this.rollDiceButton = rollDiceButton;
 		this.description = description;
+		this.okButton = okButton;
 	}
 
 	public override void PerformAction(Player currentPlayer)
 	{
 		// TODO: Needs to make method to shuffle cards rather than just picking a random one
-		int randNum = Random.Range(0, opportunityKnocksCards.Length - 1);
+		//int randNum = Random.Range(0, opportunityKnocksCards.Count - 1);
 		// Sets the description in the popup
-		description.text = opportunityKnocksCards[randNum].description;
+		opportunityKnocksCards = board.GetOpportunityKnocksCards();
+		currentCard = opportunityKnocksCards.Dequeue();
+		description.text = currentCard.description;
+
+		okButton.onClick.RemoveAllListeners();
+		okButton.onClick.AddListener(delegate
+		{
+			currentCard.performCard(currentPlayer);
+		});
+
+		opportunityKnocksCards.Enqueue(currentCard); // Unless get out of jail free card
+		board.SetOpportunityKnocksCards(opportunityKnocksCards);
+
 		opportunityKnocksPopup.SetActive(true);
 	}
 }

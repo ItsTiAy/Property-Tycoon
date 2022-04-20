@@ -17,4 +17,16 @@ public class Dice : MonoBehaviour
 
         return total;
     }
+
+    public bool WasDouble()
+    {
+        if (num1 == num2)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
