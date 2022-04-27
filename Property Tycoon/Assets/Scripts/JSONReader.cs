@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Reads data from the files and initalises objects for other classes
+/// </summary>
 public class JSONReader : MonoBehaviour
 {
     public TextAsset BoardData;
@@ -15,19 +18,30 @@ public class JSONReader : MonoBehaviour
     public GameObject potLuckPopup;
     public GameObject opportunityKnocksPopup;
     public GameObject propertyPopup;
+    public GameObject freeParkingPopup;
+    public GameObject otherPropertyPopup;
+    public GameObject taxPopup;
     public TMP_Text propertyNameUI;
     public TMP_Text rentPricesUI;
     public TMP_Text potLuckDescription;
     public TMP_Text opportunityKnocksDescription;
+    public TMP_Text freeParkingText;
+    public TMP_Text otherPropertyText;
+    public TMP_Text taxText;
     public Button rollDiceButton;
     public Button buyButton;
     public Button okButtonPotLuck;
     public Button okButtonOpportunityKnocks;
+    public Button takeCardButton;
+    public Button okButtonProperty;
+    public Button taxButton;
 
     private Queue<Card> opportunityKnocksCards;
     private Queue<Card> potLuckCards;
 
-    // Class for storing the data for all the tiles
+    /// <summary>
+    /// Stores the data for all the tiles
+    /// </summary>
     [System.Serializable]
     public class TileList
     {
@@ -42,7 +56,9 @@ public class JSONReader : MonoBehaviour
         public FreeParking freeParking;
     }
 
-    // Class for storing the card data
+    /// <summary>
+    /// Stores the data for the cards
+    /// </summary>
     [System.Serializable]
     public class Cards
     {
@@ -69,6 +85,10 @@ public class JSONReader : MonoBehaviour
     public TileList tileList = new TileList();
     public Cards card = new Cards();
 
+    /// <summary>
+    /// Creates all the board tiles and initalises all data for them
+    /// </summary>
+    /// <returns>A list of board tiles</returns>
     public BoardTile[] GetBoardTiles()
     {
         potLuckCards = new Queue<Card>();
@@ -86,20 +106,20 @@ public class JSONReader : MonoBehaviour
         for (int i = 0; i < tileList.property.Length; i++) // Property
         {
             // Sets the UI objects needed to be accessed from this class (Same for others underneath)
-            tileList.property[i].setObjects(propertyPopup, propertyNameUI, rentPricesUI, rollDiceButton, buyButton);
+            tileList.property[i].setObjects(propertyPopup, propertyNameUI, rentPricesUI, rollDiceButton, buyButton, otherPropertyPopup, otherPropertyText, okButtonProperty);
             // Adds the object into the boardTiles array at the position it is on the board (Same for others underneath)
             boardTiles[tileList.property[i].position - 1] = tileList.property[i];
         }
 
         for (int i = 0; i < tileList.station.Length; i++) // Station
         {
-            tileList.station[i].setObjects(propertyPopup, propertyNameUI, rentPricesUI, rollDiceButton, buyButton);
+            tileList.station[i].setObjects(propertyPopup, propertyNameUI, rentPricesUI, rollDiceButton, buyButton, otherPropertyPopup, otherPropertyText, okButtonProperty);
             boardTiles[tileList.station[i].position - 1] = tileList.station[i]; // numbers in json file dont start at 0 may change this 
         }
         
         for (int i = 0; i < tileList.utility.Length; i++) // Utility
         {
-            tileList.utility[i].setObjects(propertyPopup, propertyNameUI, rentPricesUI, rollDiceButton, buyButton);
+            tileList.utility[i].setObjects(propertyPopup, propertyNameUI, rentPricesUI, rollDiceButton, buyButton, otherPropertyPopup, otherPropertyText, okButtonProperty);
             boardTiles[tileList.utility[i].position - 1] = tileList.utility[i];
         }
 
@@ -132,7 +152,7 @@ public class JSONReader : MonoBehaviour
         {
             // Adds all the PotLuck cards into the array in the PotLuck class
 
-            tileList.potLuck[i].setObjects(potLuckPopup, rollDiceButton, potLuckDescription, okButtonPotLuck);
+            tileList.potLuck[i].setObjects(potLuckPopup, rollDiceButton, potLuckDescription, okButtonPotLuck, takeCardButton);
             boardTiles[tileList.potLuck[i].position - 1] = tileList.potLuck[i];
         }
 
@@ -175,7 +195,7 @@ public class JSONReader : MonoBehaviour
 
         for (int i = 0; i < tileList.tax.Length; i++) // Tax
         {
-            tileList.tax[i].setObjects(rollDiceButton);
+            tileList.tax[i].setObjects(rollDiceButton, taxPopup, taxText, taxButton);
             boardTiles[tileList.tax[i].position - 1] = tileList.tax[i];
         }
 
@@ -190,7 +210,7 @@ public class JSONReader : MonoBehaviour
         boardTiles[tileList.go.position - 1] = tileList.go;
 
         // Free parking
-        tileList.freeParking.setObjects(rollDiceButton);
+        tileList.freeParking.setObjects(rollDiceButton, freeParkingPopup, freeParkingText);
         boardTiles[tileList.freeParking.position - 1] = tileList.freeParking;
         
         return boardTiles;

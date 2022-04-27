@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The base class for all the cards
+/// </summary>
 [System.Serializable]
 public class Card
 {
@@ -13,18 +16,25 @@ public class Card
     //public CardGiveMoney[] gainMoney;
     //public CardFine[] loseMoney;
 
-    public virtual void performCard(Player player)
-    {
-        //wack
-    }
+    /// <summary>
+    /// The action performed by the card
+    /// </summary>
+    /// <param name="player"></param>
+    public virtual void performCard(Player player){}
 
+    /// <summary>
+    /// Sets the board so certain cards can access methods
+    /// </summary>
+    /// <param name="board">The board to be set</param>
     public void SetBoard(Board board)
     {
         this.board = board;
     }
 }
 
-//Pays the player money
+/// <summary>
+/// Pays the player money
+/// </summary>
 [System.Serializable]
 public class GainMoney : Card
 {
@@ -37,7 +47,9 @@ public class GainMoney : Card
 
 }
 
-//Fines the player money
+/// <summary>
+/// Fines the player money
+/// </summary>
 [System.Serializable]
 public class LoseMoney : Card
 {
@@ -48,6 +60,7 @@ public class LoseMoney : Card
     {
         freeParking = (FreeParking) board.GetBoardTiles()[20];
 
+        // If the card description contains the word "fine" adds the money to free parking
         if (description.ToLower().Contains("fine"))
         {
             freeParking.AddFineMoney(amount);
@@ -85,7 +98,9 @@ public class CardTeleport : Card
     }
 }
 */
-//Moves the player forwards (does award money for passing go)
+/// <summary>
+/// Moves the player forwards (does award money for passing go)
+/// </summary>
 [System.Serializable]
 public class MoveForward : Card
 {
@@ -93,11 +108,14 @@ public class MoveForward : Card
 
     public override void performCard(Player player)
     {
-        player.UpdatePosition((tilePosition - player.GetCurrentPosition()) - 1 % 40); // probably not correct some tweeking required
+        player.UpdatePosition(tilePosition - player.GetCurrentPosition() - 1 % 40); // probably not correct some tweeking required
         player.SetMoving(true);
     }
 }
 
+/// <summary>
+/// Moves the player backwards (teleports them)
+/// </summary>
 [System.Serializable]
 public class MoveBackward : Card
 {
@@ -105,6 +123,7 @@ public class MoveBackward : Card
 
     public override void performCard(Player player)
     {
+        // Sends the player to jail if the card has tile position of 11
         if(tilePosition == 11)
         {
             player.GoToJail();
@@ -117,6 +136,9 @@ public class MoveBackward : Card
     }
 }
 
+/// <summary>
+/// Moves the player backwards the specified amount (teleports them)
+/// </summary>
 [System.Serializable]
 public class MoveBackwardAmount : Card
 {
@@ -125,12 +147,15 @@ public class MoveBackwardAmount : Card
 
     public override void performCard(Player player)
     {
-        newPosition = player.GetCurrentPosition() - amount;
-        player.SetPosition(newPosition /*newPosition - 40 * Mathf.FloorToInt(newPosition / 40)*/);
+        newPosition = player.GetCurrentPosition() - amount + 1;
+        player.SetPosition(newPosition);
         player.SetMoving(true);
     }
 }
 
+/// <summary>
+/// Gives the current player the amount from each other player
+/// </summary>
 [System.Serializable]
 public class Birthday : Card
 {
@@ -138,8 +163,10 @@ public class Birthday : Card
 
     public override void performCard(Player player)
     {
+        // Loops for each player in the game 
         foreach (GameObject p in board.GetPlayers())
         {
+            // If the player does not equal the current player 
             if (player != p.GetComponent<Player>())
             {
                 player.IncreaseMoney(amount);
@@ -149,6 +176,9 @@ public class Birthday : Card
     }
 }
 
+/// <summary>
+/// Gives the player the choice to take an opportunity knocks card or pay a fine
+/// </summary>
 [System.Serializable]
 public class Choice : Card
 {
@@ -159,9 +189,13 @@ public class Choice : Card
     {
         freeParking = (FreeParking) board.GetBoardTiles()[20];
         freeParking.AddFineMoney(amount);
+        player.DecreaseMoney(amount);
     }
 }
 
+/// <summary>
+/// Charges the player an amount for the number of houses and hotels they own
+/// </summary>
 [System.Serializable]
 public class Repairs : Card
 {
@@ -171,14 +205,22 @@ public class Repairs : Card
     private int numHouses = 0;
     private int numHotels = 0;
 
-    public override void performCard(Player player)
+    /// <summary>
+    /// Returns the total cost of the houses and hotels
+    /// </summary>
+    /// <param name="player">The player who's cost of houses and hotels is being found</param>
+    /// <returns>The total cost of the houses and hotels</returns>
+    public int GetTotalCost(Player player)
     {
+        // Loops through all the properties a player owns
         foreach (BuyableTile buyableTile in player.properties)
         {
-            if(buyableTile.GetType() == typeof(Property))
+            // If of type property
+            if (buyableTile.GetType() == typeof(Property))
             {
-                Property property = (Property) buyableTile;
-                if(property.GetNumHouses() == 5)
+                // Adds number of hotels and houses to total
+                Property property = (Property)buyableTile;
+                if (property.GetNumHouses() == 5)
                 {
                     numHotels++;
                 }
@@ -189,10 +231,19 @@ public class Repairs : Card
             }
         }
         int total = (hotelCost * numHotels) + (houseCost * numHouses);
-        player.DecreaseMoney(total);
+
+        return total;
+    }
+
+    public override void performCard(Player player)
+    {
+        player.DecreaseMoney(GetTotalCost(player));
     }
 }
 
+/// <summary>
+/// Represents the get out of jail free card
+/// </summary>
 [System.Serializable]
 public class GetOutOfJailFree : Card
 {
@@ -200,6 +251,7 @@ public class GetOutOfJailFree : Card
 
     public override void performCard(Player player)
     {
+        /*
         if (cardType == "Opportunity Knocks")
         {
             player.setGetOutOfJailFreeOpportunityKnocks(true);
@@ -208,6 +260,7 @@ public class GetOutOfJailFree : Card
         {
             player.setGetOutOfJailFreePotluck(true);
         }
+        */
     }
 }
 

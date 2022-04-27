@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 
@@ -9,7 +10,7 @@ public class Board : MonoBehaviour
     //private Dice dice;
     private int numPlayers;
     //private int currentPlayerNum = 0;
-    private GameObject[] playerArray;
+    private List<GameObject> playerArray;
     private const int numSpacesOnBoard = 40;
     private Transform[][] waypointsList;
     private Transform[] jailWaypoints;
@@ -27,6 +28,11 @@ public class Board : MonoBehaviour
     public GameObject player;
     public Dice dice;
 
+    public Controller controller;
+    public GameObject bankruptPopup;
+    public Button bankruptButton;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,38 +47,67 @@ public class Board : MonoBehaviour
 
         // Temporary hardcode of number of players
         numPlayers = 2;
-        playerArray = new GameObject[numPlayers];
+        playerArray = new List<GameObject>();
 
         CreateWaypoints();
 
         // Loops for each player, adding them to a list of all the players
         for (int i = 0; i < numPlayers; i++)
         {
-            playerArray[i] = Instantiate(player, new Vector3(i - 24, 0, -24), Quaternion.identity);
+            playerArray.Add(Instantiate(player, new Vector3(i - 24, 0, -24), Quaternion.identity));
             playerArray[i].GetComponent<Player>().setWaypoints(waypointsList[i]);
             playerArray[i].GetComponent<Player>().SetJailWaypoint(jailWaypoints[i]);
+            playerArray[i].GetComponent<Player>().SetBoard(this);
         }
     }
 
+    /// <summary>
+    /// Sets the roll dice button to be the end turn button
+    /// </summary>
+    public void EndTurn()
+    {
+        controller.SetButtonToEndTurn();
+    }
+
+    /// <summary>
+    /// Sets the cards for opportunity knocks
+    /// </summary>
+    /// <param name="cards">The queue of cards you want to be set</param>
     public void SetOpportunityKnocksCards(Queue<Card> cards)
     {
         opportunityKnocksCards = cards;
     }
 
+    /// <summary>
+    /// Sets the cards for potluck
+    /// </summary>
+    /// <param name="cards">The queue of cards you want to be set</param>
     public void SetPotluckCards(Queue<Card> cards)
     {
         potLuckCards = cards;
     }
+
+    /// <summary>
+    /// Returns the opportunity knocks cards
+    /// </summary>
+    /// <returns>The opportunity knocks cards</returns>
     public Queue<Card> GetOpportunityKnocksCards()
     {
         return opportunityKnocksCards;
     }
 
+    /// <summary>
+    /// Returns the potluck cards
+    /// </summary>
+    /// <returns>The potluck cards</returns>
     public Queue<Card> GetPotluckCards()
     {
         return potLuckCards;
     }
 
+    /// <summary>
+    /// Shuffles the opportunity knocks and potluck cards
+    /// </summary>
     private void ShuffleCards()
     {
         int randNum;
@@ -88,17 +123,19 @@ public class Board : MonoBehaviour
 
         while (opportunityKnocksTemp.Count > 0)
         {
+            // Removes a random card from opportunityKnocksTemp and enqueues it into opportunityKnocksShuffled
+            // Loops until no more cards in opportunityKnocksTemp
             randNum = Random.Range(0, opportunityKnocksTemp.Count);
             opportunityKnocksShuffled.Enqueue(opportunityKnocksTemp[randNum]);
-            //Debug.Log(opportunityKnocksTemp[randNum].description);
             opportunityKnocksTemp.RemoveAt(randNum);
         }
 
         while (potLuckTemp.Count > 0)
         {
+            // Removes a random card from potLuckTemp and enqueues it into potLuckShuffled
+            // Loops until no more cards in potLuckTemp
             randNum = Random.Range(0, potLuckTemp.Count);
             potLuckShuffled.Enqueue(potLuckTemp[randNum]);
-            //Debug.Log(potLuckTemp[randNum].description);
             potLuckTemp.RemoveAt(randNum);
         }
 
@@ -106,23 +143,36 @@ public class Board : MonoBehaviour
         potLuckCards = potLuckShuffled;
     }
 
-    public GameObject[] GetPlayers()
+    /// <summary>
+    /// Returns a list of all the players in the game currently
+    /// </summary>
+    /// <returns>A list of all the players in the game currently</returns>
+    public List<GameObject> GetPlayers()
     {
         return playerArray;
     }
 
+    /// <summary>
+    /// Returns the number of players currently in the game
+    /// </summary>
+    /// <returns>The number of players currently in the game</returns>
     public int GetNumPlayers()
     {
-        return numPlayers;
+        return GetPlayers().Count;
     }
 
+    /// <summary>
+    /// Returns an array of all the board tiles
+    /// </summary>
+    /// <returns>An array of all the board tiles</returns>
     public BoardTile[] GetBoardTiles()
     {
         return boardTiles;
     }
 
-    // Creates the waypoints for each player for where their piece goes on the board
-    // Each player is given a list of waypoints unique to them
+    /// <summary>
+    /// Creates the waypoints for each player for where their piece goes on the board. Each player is given a list of waypoints unique to them
+    /// </summary>
     private void CreateWaypoints()
     {
         waypointsList = new Transform[numPlayers][];

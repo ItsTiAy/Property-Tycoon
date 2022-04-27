@@ -8,6 +8,10 @@ public class Jail : BoardTile
 {
 	private Button rollDiceButton;
 
+	/// <summary>
+	/// Sets Objects, text and buttons to be used by this class
+	/// </summary>
+	/// <param name="rollDiceButton">The roll dice button</param>
 	public void setObjects(Button rollDiceButton)
 	{
 		this.rollDiceButton = rollDiceButton;
@@ -15,6 +19,7 @@ public class Jail : BoardTile
 
 	public override void PerformAction(Player currentPlayer)
 	{
+		// If the player is on the go to jail space
 		if(currentPlayer.GetCurrentPosition() != 10)
         {
 			currentPlayer.GoToJail();

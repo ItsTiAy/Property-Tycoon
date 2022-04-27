@@ -17,36 +17,68 @@ public class BuyableTile : BoardTile
     protected bool mortgaged;
 
     protected GameObject propertyPopup;
+    protected GameObject otherPropertyPopup;
 	protected TMP_Text propertyNameUI;
 	protected TMP_Text rentPricesUI;
-	protected Button rollDiceButton;
+    protected TMP_Text otherPropertyText;
+    protected Button rollDiceButton;
 	protected Button buyButton;
+    protected Button okButton;
 
-    public void setObjects(GameObject propertyPopup, TMP_Text propertyNameUI, TMP_Text rentPricesUI, Button rollDiceButton, Button buyButton)
+    /// <summary>
+    /// Sets Objects, text and buttons to be used by this class
+    /// </summary>
+    /// <param name="propertyPopup">The property popup</param>
+    /// <param name="propertyNameUI">The property popup name text element</param>
+    /// <param name="rentPricesUI"> The property popup rent text element</param>
+    /// <param name="rollDiceButton">The roll dice button</param>
+    /// <param name="buyButton">The buy property button</param>
+    /// <param name="otherPropertyPopup">The popup for landing on another players property</param>
+    /// <param name="otherPropertyText">The main text for the popup for landing on another players propert</param>
+    /// <param name="okButton">The ok button for the popup for landing on another players propert</param>
+    public void setObjects(GameObject propertyPopup, TMP_Text propertyNameUI, TMP_Text rentPricesUI, Button rollDiceButton, Button buyButton, GameObject otherPropertyPopup, TMP_Text otherPropertyText, Button okButton)
     {
         this.propertyPopup = propertyPopup;
         this.propertyNameUI = propertyNameUI;
         this.rentPricesUI = rentPricesUI;
         this.rollDiceButton = rollDiceButton;
         this.buyButton = buyButton;
- 
+        this.otherPropertyPopup = otherPropertyPopup;
+        this.otherPropertyText = otherPropertyText;
+        this.okButton = okButton;
     }
 
+    /// <summary>
+    /// Returns the cost of a property
+    /// </summary>
+    /// <returns>The cost of a property</returns>
     public int GetCost()
     {
         return cost;
     }
 
+    /// <summary>
+    /// Sets the owner of a property
+    /// </summary>
+    /// <param name="player">The player to be set owner</param>
     public void SetOwner(Player player)
     {
         ownedBy = player;
     }
 
+    /// <summary>
+    /// Returns whether the property is mortgaged
+    /// </summary>
+    /// <returns>True if the property is mortgaged, false otherwise</returns>
     public bool IsMortgaged()
     {
         return mortgaged;
     }
 
+    /// <summary>
+    /// Sets the property to be mortgaged or unmortgaged
+    /// </summary>
+    /// <param name="isMortgaged">The value you want to set mortgaged to</param>
     public void SetMortgaged(bool isMortgaged)
     {
         mortgaged = isMortgaged;
@@ -60,6 +92,10 @@ public class BuyableTile : BoardTile
         }
     }
 
+    /// <summary>
+    /// Returns the colour of the properties group
+    /// </summary>
+    /// <returns>The colour of the properties group</returns>
     public Color32 GetGroupColour()
     {
         switch (group)
