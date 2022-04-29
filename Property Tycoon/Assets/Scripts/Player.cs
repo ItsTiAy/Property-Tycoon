@@ -9,7 +9,10 @@ using TMPro;
 /// </summary>
 public class Player : MonoBehaviour
 {
-	private int numLaps = 1;
+	private Color playerColour;
+	private int id;
+	private string token;
+	private int numLaps = 0;
     private int currentPosition = 0;
     private int newPosition;
 	private int turnsInJail;
@@ -30,7 +33,6 @@ public class Player : MonoBehaviour
 	public GameObject button;
     private Board board;
 
-	// Should be private, add getters and setters later
 	public List<BuyableTile> properties;
 	public List<Property> mortgaged;
 	public int money;
@@ -52,6 +54,35 @@ public class Player : MonoBehaviour
 		properties = new List<BuyableTile>();
 		mortgaged = new List<Property>();
 		money = 1500;
+		playerInfoCard.transform.Find("Player Colour").GetComponent<Image>().color = playerColour;
+		playerInfoCard.GetComponentInChildren<TMP_Text>().text = "Player " + id;
+	}
+
+	/// <summary>
+	/// Sets the id for the player
+	/// </summary>
+	/// <param name="id">The value of the id to be set</param>
+	public void SetId(int id)
+    {
+		this.id = id;
+    }
+
+	/// <summary>
+	/// Returns the player's id
+	/// </summary>
+	/// <returns>The player's id</returns>
+	public int GetId()
+	{
+		return id;
+	}
+
+	/// <summary>
+	/// Sets the colour for the player
+	/// </summary>
+	/// <param name="colour">The colour to be set to the player</param>
+	public void SetColour(Color colour)
+    {
+		playerColour = colour;
 	}
 
 	/// <summary>
@@ -407,20 +438,23 @@ public class Player : MonoBehaviour
 	{
 		properties.Remove(property);
 		property.SetBuyable(true);
-		property.SetOwner(null);
+
+		Debug.Log(property.IsMortgaged());
 
 		if (property.IsMortgaged())
         {
 			IncreaseMoney(property.GetCost() / 2);
-			Debug.Log(money);
+			//Debug.Log(money);
 		}
 		else
         {
 			IncreaseMoney(property.GetCost());
-			Debug.Log(money);
+			Debug.Log(GetMoney());
 		}
 
-		property.SetMortgaged(false);
+		property.SetMortgagedDirect(false);
+		property.SetOwner(null);
+		//Debug.Log(property.GetCost());
 	}
 
 	/// <summary>
@@ -619,7 +653,7 @@ public class Player : MonoBehaviour
 		foreach (BuyableTile tile in properties)
 		{
 			tile.SetOwner(null);
-			tile.SetMortgaged(false);
+			tile.SetMortgagedDirect(false);
 			tile.SetBuyable(true);
 
 			if (tile.GetType() == typeof(Property))

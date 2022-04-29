@@ -93,6 +93,15 @@ public class BuyableTile : BoardTile
     }
 
     /// <summary>
+    /// Sets the property to mortgaged or unmortgaged without chaning the players money
+    /// </summary>
+    /// <param name="mortgaged">The value you want to set mortgaged to</param>
+    public void SetMortgagedDirect(bool mortgaged)
+    {
+        this.mortgaged = mortgaged;
+    }
+
+    /// <summary>
     /// Returns the colour of the properties group
     /// </summary>
     /// <returns>The colour of the properties group</returns>

@@ -420,7 +420,7 @@ RectTransform:
   m_Children:
   - {fileID: 1628854771}
   m_Father: {fileID: 495387483}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2028,7 +2028,7 @@ RectTransform:
   - {fileID: 626141904}
   - {fileID: 2042728924}
   m_Father: {fileID: 495387483}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2165,6 +2165,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1730887127}
+  - {fileID: 1020118136}
   - {fileID: 1041710677594418953}
   - {fileID: 82529315}
   - {fileID: 1872246837}
@@ -2174,7 +2175,6 @@ RectTransform:
   - {fileID: 883811958}
   - {fileID: 1154181285}
   - {fileID: 495075746}
-  - {fileID: 1020118136}
   - {fileID: 1663054193}
   - {fileID: 296827403}
   m_Father: {fileID: 0}
@@ -3172,7 +3172,7 @@ RectTransform:
   m_Children:
   - {fileID: 1772143331}
   m_Father: {fileID: 495387483}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3342,7 +3342,7 @@ RectTransform:
   m_Children:
   - {fileID: 1440486140}
   m_Father: {fileID: 495387483}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3791,7 +3791,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 495387483}
-  m_RootOrder: 10
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -4228,7 +4228,7 @@ RectTransform:
   m_Children:
   - {fileID: 1743036128}
   m_Father: {fileID: 495387483}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6375,6 +6375,7 @@ MonoBehaviour:
   propertyInfoPanelRent: {fileID: 1199707833}
   dice1UI: {fileID: 114456338}
   dice2UI: {fileID: 1729014055}
+  gameEndPopupText: {fileID: 1888447029}
   buyHouse: {fileID: 1198477433}
   sellHouse: {fileID: 2138533913}
   mortgage: {fileID: 1265613684}
@@ -6387,6 +6388,7 @@ MonoBehaviour:
   potLuckOkButton: {fileID: 297626455}
   taxButton: {fileID: 1026232246}
   buyProperty: {fileID: 1147833066502254492}
+  gameEndButton: {fileID: 2005403422}
 --- !u!4 &1595883677
 Transform:
   m_ObjectHideFlags: 0
@@ -8068,7 +8070,7 @@ RectTransform:
   m_Children:
   - {fileID: 1836656714}
   m_Father: {fileID: 495387483}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9226,7 +9228,7 @@ RectTransform:
   m_Children:
   - {fileID: 2000629738}
   m_Father: {fileID: 495387483}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9732,7 +9734,7 @@ RectTransform:
   m_Children:
   - {fileID: 1925208101}
   m_Father: {fileID: 495387483}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9991,7 +9993,7 @@ RectTransform:
   m_Children:
   - {fileID: 8232235135041276755}
   m_Father: {fileID: 495387483}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10209,7 +10211,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Auction
+  m_text: Don't Buy
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

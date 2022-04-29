@@ -45,8 +45,7 @@ public class Board : MonoBehaviour
             boardTile.setBoard(this);
         }
 
-        // Temporary hardcode of number of players
-        numPlayers = 2;
+        numPlayers = InitialData.NumPlayers;
         playerArray = new List<GameObject>();
 
         CreateWaypoints();
@@ -58,6 +57,9 @@ public class Board : MonoBehaviour
             playerArray[i].GetComponent<Player>().setWaypoints(waypointsList[i]);
             playerArray[i].GetComponent<Player>().SetJailWaypoint(jailWaypoints[i]);
             playerArray[i].GetComponent<Player>().SetBoard(this);
+            playerArray[i].GetComponentInChildren<MeshRenderer>().material.color = InitialData.PlayerColours[i];
+            playerArray[i].GetComponent<Player>().SetColour(InitialData.PlayerColours[i]);
+            playerArray[i].GetComponent<Player>().SetId(i + 1);
         }
     }
 

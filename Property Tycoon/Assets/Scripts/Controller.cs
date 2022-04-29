@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.Threading;
 /// <summary>
 /// Controller class
 /// </summary>
@@ -11,6 +12,7 @@ public class Controller : MonoBehaviour
 {
     private int currentPlayerNum;
     private Player currentPlayer;
+    private DateTime startTime = DateTime.Now;
 
     public Dice dice;
     public Board board;
@@ -32,6 +34,7 @@ public class Controller : MonoBehaviour
     public TMP_Text propertyInfoPanelRent;
     public TMP_Text dice1UI;
     public TMP_Text dice2UI;
+    public TMP_Text gameEndPopupText;
     public Button buyHouse;
     public Button sellHouse;
     public Button mortgage;
@@ -44,6 +47,7 @@ public class Controller : MonoBehaviour
     public Button potLuckOkButton;
     public Button taxButton;
     public Button buyProperty;
+    public Button gameEndButton;
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +69,21 @@ public class Controller : MonoBehaviour
                 TileAction();
             }
         }
+
+        // Quits game if you press the escape key
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
+    }
+
+    public bool ReachedTimeLimit()
+    {
+        if ((DateTime.Now - startTime).TotalMinutes > InitialData.TimeLimit)
+        {
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
@@ -72,6 +91,14 @@ public class Controller : MonoBehaviour
     /// </summary>
     public void EndTurn()
     {
+        if (!InitialData.IsFullGame)
+        {
+            if (ReachedTimeLimit() && currentPlayerNum == board.GetNumPlayers() - 1)
+            {
+                EndGame();
+            }
+        }
+
         Debug.Log(currentPlayer.GetCurrentPosition());
         // Updates the current player number
         currentPlayerNum = (currentPlayerNum + 1) % board.GetNumPlayers();
@@ -240,6 +267,28 @@ public class Controller : MonoBehaviour
     /// </summary>
     public void EndGame()
     {
+        if (!InitialData.IsFullGame)
+        {
+            Player playerWithMostMoney = null;
+            for (int i = 0; i < board.GetNumPlayers() - 1; i++)
+            {
+                if (board.GetPlayers()[i].GetComponent<Player>().calculateMaxPossibleMoney() > board.GetPlayers()[i + 1].GetComponent<Player>().calculateMaxPossibleMoney())
+                {
+                    playerWithMostMoney = board.GetPlayers()[i].GetComponent<Player>();
+                }
+                else
+                {
+                    playerWithMostMoney = board.GetPlayers()[i + 1].GetComponent<Player>();
+                }
+            }
+            gameEndPopupText.text = "Player " + playerWithMostMoney.GetId() + " has won the game";
+
+            gameEndButton.onClick.RemoveAllListeners();
+            gameEndButton.onClick.AddListener(delegate
+            {
+                Application.Quit();
+            });
+        }
         Debug.Log("The game has ended");
         rollDiceButton.interactable = false;
         GameEndPopup.SetActive(true);
